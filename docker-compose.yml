@@ -1,0 +1,27 @@
+version: '2'
+volumes:
+  resin-data:
+
+services:
+  homeassistant:
+    build: ./homeassistant
+    ports: 
+      - "8123:8123"
+    volumes:
+      - 'resin-data:/persistent'
+
+  mosquitto:
+    build: ./mosquitto
+    expose:
+      - "1883"
+    volumes:
+      - 'resin-data:/persistent'
+
+  zigbee2mqtt:
+    build: zigbee2mqtt
+    ports:
+      - "8080:8080"
+    volumes:
+      - 'resin-data:/persistent'
+    devices: 
+      - '/dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2251372-if00:/dev/ttyACM0'

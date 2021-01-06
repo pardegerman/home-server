@@ -1,0 +1,30 @@
+# Home Assistant integration (MQTT discovery)
+homeassistant: true
+
+# allow new devices to join
+permit_join: true
+
+# MQTT settings
+mqtt:
+  # MQTT base topic for zigbee2mqtt MQTT messages
+  base_topic: zigbee2mqtt
+  # MQTT server URL
+  server: 'mqtt://mosquitto'
+  # MQTT server authentication, uncomment if required:
+  # user: my_user
+  # password: my_password
+
+# Serial settings
+serial:
+  port: /dev/ttyACM0
+  adapter: deconz
+
+advanced:
+  log_level: warn
+  log_output:
+    - console
+
+frontend:
+
+devices: devices.yaml
+groups: groups.yaml
