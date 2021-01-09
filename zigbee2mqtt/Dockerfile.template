@@ -1,5 +1,10 @@
 FROM koenkk/zigbee2mqtt
 
+ARG CONF_DIR=/app/data
+RUN mkdir -p /persistent/%%BALENA_SERVICE_NAME%% && \
+    rmdir ${CONF_DIR} && \
+    ln -sf /persistent/%%BALENA_SERVICE_NAME%% ${CONF_DIR} 
+
 COPY ./configuration.yaml /app/configuration.yaml
-COPY ./docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+EXPOSE 8080

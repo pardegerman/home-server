@@ -1,0 +1,22 @@
+FROM diyhue/core:latest
+
+ARG CONF_DIR=/opt/hue-emulator/export
+RUN mkdir -p /persistent/%%BALENA_SERVICE_NAME%% && \
+    if [ -d ${CONF_DIR} ]; then rmdir ${CONF_DIR}; fi && \
+    ln -sf /persistent/%%BALENA_SERVICE_NAME%% ${CONF_DIR} 
+
+RUN apt-get update && apt-get install -y \
+  curl jq \
+  && rm -rf /var/lib/apt/lists/*
+
+COPY entrypoint.sh /opt/hue-emulator/entrypoint.sh
+RUN chmod +x /opt/hue-emulator/entrypoint.sh
+
+EXPOSE 80
+EXPOSE 443
+EXPOSE 1900
+EXPOSE 2100
+EXPOSE 1982
+
+ENTRYPOINT [ "/opt/hue-emulator/entrypoint.sh" ]
+CMD [ "/usr/bin/python3", "-u", "/opt/hue-emulator/HueEmulator3.py" ]
