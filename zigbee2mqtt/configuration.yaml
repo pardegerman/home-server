@@ -25,6 +25,7 @@ advanced:
     - console
 
 frontend:
+  port: 8080
 
 devices: devices.yaml
 groups: groups.yaml

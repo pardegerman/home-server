@@ -1,9 +1,4 @@
 FROM %%BALENA_SERVICE_NAME%%/%%BALENA_MACHINE_NAME%%-%%BALENA_SERVICE_NAME%%:stable
 
-ARG CONF_DIR=/config
-RUN mkdir -p /persistent/%%BALENA_SERVICE_NAME%% && \
-    rmdir ${CONF_DIR} && \
-    ln -sf /persistent/%%BALENA_SERVICE_NAME%% ${CONF_DIR} 
-
 # Expose standard home assistant port
 EXPOSE 8123

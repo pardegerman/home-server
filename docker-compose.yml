@@ -1,6 +1,8 @@
 version: '2'
 volumes:
-  resin-data:
+  homeassistant-data:
+  zigbee2mqtt-data:
+  diyhue-data:
 
 services:
   homeassistant:
@@ -8,21 +10,19 @@ services:
     ports: 
       - "8123:8123"
     volumes:
-      - 'resin-data:/persistent'
+      - 'homeassistant-data:/config'
 
   mosquitto:
     build: ./mosquitto
     expose:
       - "1883"
-    volumes:
-      - 'resin-data:/persistent'
 
   zigbee2mqtt:
     build: zigbee2mqtt
     ports:
       - "8080:8080"
     volumes:
-      - 'resin-data:/persistent'
+      - 'zigbee2mqtt-data:/app/data'
     devices: 
       - '/dev/serial/by-id/usb-dresden_elektronik_ingenieurtechnik_GmbH_ConBee_II_DE2251372-if00:/dev/ttyACM0'
 
@@ -35,6 +35,6 @@ services:
       - "2100:2100/udp"
       - "1982:1982/udp"
     volumes:
-      - 'resin-data:/persistent'
+      - 'diyhue-data:/opt/hue-emulator/export'
     labels:
       io.balena.features.supervisor-api: '1'
