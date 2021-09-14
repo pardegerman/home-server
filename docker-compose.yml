@@ -14,6 +14,8 @@ services:
 
   mosquitto:
     build: ./mosquitto
+    ports:
+      - "1883:1883"
     expose:
       - "1883"
 

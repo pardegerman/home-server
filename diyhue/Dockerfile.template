@@ -1,4 +1,4 @@
-FROM diyhue/core:latest
+FROM diyhue/core:dev
 
 RUN apt-get update && apt-get install -y \
   curl jq \
@@ -7,11 +7,9 @@ RUN apt-get update && apt-get install -y \
 COPY entrypoint.sh /opt/hue-emulator/entrypoint.sh
 RUN chmod +x /opt/hue-emulator/entrypoint.sh
 
-EXPOSE 80
-EXPOSE 443
-EXPOSE 1900
-EXPOSE 2100
-EXPOSE 1982
+RUN echo cp /opt/hue-emulator/cert.pem /opt/hue-emulator/export/cert.pem >> /opt/hue-emulator/genCert.sh
+
+EXPOSE 80 443 1900/udp 1982/udp 2100/udp
 
 ENTRYPOINT [ "/opt/hue-emulator/entrypoint.sh" ]
 CMD [ "/usr/bin/python3", "-u", "/opt/hue-emulator/HueEmulator3.py" ]
